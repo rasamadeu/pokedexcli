@@ -18,7 +18,7 @@ func main() {
 			return 
 		}
 		command := cleanInput(scanner.Text())[0]
-		fmt.Println("Your command was: ", command)
+		fmt.Println("Your command was:", command)
 	}
 
 	return
