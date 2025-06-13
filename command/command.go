@@ -1,11 +1,15 @@
 package command
 
-import "github.com/rasamadeu/pokedexcli/internal/pokeapi"
+import (
+	"github.com/rasamadeu/pokedexcli/internal/pokeapi"
+	"github.com/rasamadeu/pokedexcli/internal/pokecache"
+)
 
 type Config struct {
 	PokeapiClient    *pokeapi.Client
 	LocationNext     *string
 	LocationPrevious *string
+	Pokecache        *pokecache.Cache
 }
 
 type CliCommand struct {

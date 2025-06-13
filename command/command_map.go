@@ -5,9 +5,12 @@ import (
 	"errors"
 )
 
-func requestLocation(config_url *string, config *Config) error {
+func requestLocation(url *string, config *Config) error {
 
-	location, err := config.PokeapiClient.GetLocation(config_url)
+	location, err := config.PokeapiClient.GetLocation(
+		url,
+		config.Pokecache,
+		)
 	if err != nil {
 		return err
 	}
@@ -21,13 +24,13 @@ func requestLocation(config_url *string, config *Config) error {
 }
 
 func commandMap(config *Config) error {
-		return requestLocation(config.LocationNext, config)
+	return requestLocation(config.LocationNext, config)
 }
 
 func commandBmap(config *Config) error {
 
-		if config.LocationPrevious == nil {
-			return errors.New("You're on the first page!")
-		}
-		return requestLocation(config.LocationPrevious, config)
+	if config.LocationPrevious == nil {
+		return errors.New("You're on the first page!")
+	}
+	return requestLocation(config.LocationPrevious, config)
 }

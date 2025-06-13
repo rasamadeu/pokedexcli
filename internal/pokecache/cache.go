@@ -1,7 +1,6 @@
 package pokecache
 
 import (
-	//"fmt"
 	"sync"
 	"time"
 )
@@ -14,8 +13,8 @@ type cacheEntry struct {
 type Cache struct {
 	data     map[string]cacheEntry
 	lifetime time.Duration          // Data lifetime duration in cache
-	mut      sync.Mutex             // Mutex to control I/O operations
-	ticker   *time.Ticker            // Ticker used to call reapLoop
+	mut      *sync.Mutex            // Mutex to control I/O operations
+	ticker   *time.Ticker           // Ticker used to call reapLoop
 	kill     chan bool              // Channel to signal closing cache
 }
 
@@ -70,11 +69,11 @@ func (cache *Cache) reapLoop() {
 	}
 }
 
-func NewCache(lifetime time.Duration) Cache {
+func NewCache(lifetime time.Duration) *Cache {
 	cache := Cache{
 		data:     make(map[string]cacheEntry),
 		lifetime: lifetime,
-		mut:      sync.Mutex{},
+		mut:      &sync.Mutex{},
 		ticker:   time.NewTicker(lifetime),
 		kill:     make(chan bool),
 	}
@@ -94,5 +93,5 @@ func NewCache(lifetime time.Duration) Cache {
 		}
 	}()
 	
-	return cache
+	return &cache
 }

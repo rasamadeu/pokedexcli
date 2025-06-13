@@ -9,6 +9,7 @@ import (
 	// Project
 	"github.com/rasamadeu/pokedexcli/command"
 	"github.com/rasamadeu/pokedexcli/internal/pokeapi"
+	"github.com/rasamadeu/pokedexcli/internal/pokecache"
 )
 
 func replStart(){
@@ -19,6 +20,7 @@ func replStart(){
 	// Configuration used by commands
 	config := &command.Config{
 		PokeapiClient: pokeapi.NewClient(5 * time.Second),
+		Pokecache:     pokecache.NewCache(10 * time.Second),
 	}
 
 	commands := command.CreateCommands()
