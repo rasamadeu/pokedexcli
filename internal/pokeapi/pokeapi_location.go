@@ -35,13 +35,13 @@ func (c *Client) GetLocation(url *string) (Location, error)  {
 	// Retrieve data from url
 	res, err := c.httpClient.Do(req)
 	if err != nil {
-		return Location{}, fmt.Errorf("Error: failed GET %s: %v", url, err)
+		return Location{}, fmt.Errorf("Error: failed GET %s: %v", reqUrl, err)
 	}
 	defer res.Body.Close()
 
 	data, err := io.ReadAll(res.Body)
 	if err != nil {
-		return Location{}, fmt.Errorf("Error: failed reading data from response to %s: %v", url, err)
+		return Location{}, fmt.Errorf("Error: failed reading data from response to %s: %v", reqUrl, err)
 	}
 
 	var location Location
