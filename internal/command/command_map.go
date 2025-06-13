@@ -23,7 +23,7 @@ func requestLocation(url string, config *config) error {
 func commandMap(commands map[string]CliCommand, config *config) func() error {
 	return func() error {
 
-		url := pokeapi.PokeapiLocationAreaURL
+		url := ""
 		if config.next != "" {
 			url = config.next
 		}
@@ -35,11 +35,11 @@ func commandMap(commands map[string]CliCommand, config *config) func() error {
 func commandBmap(commands map[string]CliCommand, config *config) func() error {
 	return func() error {
 
-		if config.previous == "" {
+		url := config.previous
+		if url == "" {
 			fmt.Println("You're on the first page!")
 			return nil
 		}
-		url := pokeapi.PokeapiLocationAreaURL
 
 		return requestLocation(url, config)
 	}
