@@ -1,24 +1,21 @@
 package command
 
-type config struct {
-	next     string
-	previous string
+import "github.com/rasamadeu/pokedexcli/internal/pokeapi"
+
+type Config struct {
+	PokeapiClient    *pokeapi.Client
+	LocationNext     *string
+	LocationPrevious *string
 }
 
 type CliCommand struct {
 	Name        string
 	Description string
-	Callback    func() error
+	Callback    func(*Config) error
 }
 
 // This function return a map containing all possible Cli commands
 func CreateCommands() map[string]CliCommand {
-
-	// Pointer that will be shared by map and bmap commands
-	configsMap := &config{
-		next:     "",
-		previous: "",
-	}
 
 	commands := map[string]CliCommand{
 		"exit": {
@@ -28,22 +25,22 @@ func CreateCommands() map[string]CliCommand {
 		},
 	}
 
-	commands["help"] = CliCommand{
-		Name:        "help",
-		Description: "Displays a help message",
-		Callback:    commandHelp(commands),
-	}
-
 	commands["map"] = CliCommand{
 		Name:        "map",
 		Description: "Displays the next 20 locations",
-		Callback:    commandMap(commands, configsMap),
+		Callback:    commandMap,
 	}
 
 	commands["bmap"] = CliCommand{
 		Name:        "bmap",
 		Description: "Displays the previous 20 locations",
-		Callback:    commandBmap(commands, configsMap),
+		Callback:    commandBmap,
+	}
+
+	commands["help"] = CliCommand{
+		Name:        "help",
+		Description: "Displays a help message",
+		Callback:    commandHelp(commands),
 	}
 
 	return commands
