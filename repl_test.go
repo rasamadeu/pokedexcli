@@ -25,9 +25,13 @@ func TestCleanInput(t *testing.T) {
 			input: " hello  world  CHARMANDER SHINY",
 			expected: []string{"hello", "world", "charmander", "shiny"},
 		},
+		{
+			input: "",
+			expected: []string{},
+		},
 	}
 	for _, c := range cases {
-		output := cleanInput(c.input)
+		output, _ := cleanInput(c.input)
 		if len(output) != len(c.expected) {
 			t.Errorf(
 				"Failed test:\ninput: %s\nexpected: %v\noutput: %v\n",

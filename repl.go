@@ -21,14 +21,20 @@ func replStart(){
 			fmt.Println(err)
 			return 
 		}
-		input := cleanInput(scanner.Text())[0]
+
+		words, err := cleanInput(scanner.Text())
+		if err != nil {
+			continue
+		}
+		input := words[0]
+
 		command, ok := commands[input]
 		if ok == false {
 			fmt.Println("Unknown command: insert \"help\" for guidance")
 			continue
 		}
-		err := command.Callback()
-		if err != nil {
+
+		if err := command.Callback(); err != nil {
 			fmt.Println(err)
 		}
 	}
