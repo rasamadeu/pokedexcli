@@ -42,7 +42,8 @@ func (c *Client) GetLocation(url *string, pokecache *pokecache.Cache) (Location,
 	var location Location
 	err := json.Unmarshal(data, &location)
 	if err != nil {
-		return Location{}, fmt.Errorf("Error: invalid struct to Unmarshal %s: %v", data, err)
+		fmt.Println(data)
+		return Location{}, fmt.Errorf("Error: invalid struct to Unmarshal\ndata: %s\nerr: %v", data, err)
 	}
 
 	return location, nil

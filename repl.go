@@ -21,6 +21,7 @@ func replStart(){
 	config := &command.Config{
 		PokeapiClient: pokeapi.NewClient(5 * time.Second),
 		Pokecache:     pokecache.NewCache(10 * time.Second),
+		Pokedex:       make(map[string]pokeapi.Pokemon, 0),
 	}
 
 	commands := command.CreateCommands()
@@ -38,6 +39,7 @@ func replStart(){
 			continue
 		}
 		input := words[0]
+		params := words[1:]
 
 		command, ok := commands[input]
 		if ok == false {
@@ -45,7 +47,7 @@ func replStart(){
 			continue
 		}
 
-		if err := command.Callback(config); err != nil {
+		if err := command.Callback(config, params); err != nil {
 			fmt.Println(err)
 		}
 	}

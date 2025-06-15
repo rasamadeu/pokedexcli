@@ -23,11 +23,19 @@ func requestLocation(url *string, config *Config) error {
 	return nil
 }
 
-func commandMap(config *Config) error {
+func commandMap(config *Config, params []string) error {
+
+	if len(params) != 0 {
+		return errors.New("The map command does not accept parameters. Usage: Pokedex > map")
+	}
 	return requestLocation(config.LocationNext, config)
 }
 
-func commandBmap(config *Config) error {
+func commandBmap(config *Config, params []string) error {
+
+	if len(params) != 0 {
+		return errors.New("The bmap command does not accept parameters. Usage: Pokedex > bmap")
+	}
 
 	if config.LocationPrevious == nil {
 		return errors.New("You're on the first page!")
